@@ -1,7 +1,7 @@
 import { JSDOM } from "jsdom";
 import TurndownService from "turndown";
 import is_ip_private from "private-ip";
-import { FetchMcpResponse, RequestPayload } from "./types.js";
+import { McpResponse, RequestPayload } from "./types.js";
 
 export class Fetcher {
   private static applyLengthLimits(text: string, maxLength: number, startIndex: number): string {
@@ -55,12 +55,12 @@ export class Fetcher {
         requestPayload.start_index ?? 0
       );
 
-      return { content: [{ type: "text", text: html }], isError: false } satisfies FetchMcpResponse;
+      return { content: [{ type: "text", text: html }] } satisfies McpResponse;
     } catch (error) {
       return {
         content: [{ type: "text", text: (error as Error).message }],
         isError: true,
-      } satisfies FetchMcpResponse;
+      } satisfies McpResponse;
     }
   }
 
@@ -79,13 +79,12 @@ export class Fetcher {
 
       return {
         content: [{ type: "text", text: jsonString }],
-        isError: false,
-      } satisfies FetchMcpResponse;
+      } satisfies McpResponse;
     } catch (error) {
       return {
         content: [{ type: "text", text: (error as Error).message }],
         isError: true,
-      } satisfies FetchMcpResponse;
+      } satisfies McpResponse;
     }
   }
 
@@ -114,13 +113,12 @@ export class Fetcher {
 
       return {
         content: [{ type: "text", text: normalizedText }],
-        isError: false,
-      } satisfies FetchMcpResponse;
+      } satisfies McpResponse;
     } catch (error) {
       return {
         content: [{ type: "text", text: (error as Error).message }],
         isError: true,
-      } satisfies FetchMcpResponse;
+      } satisfies McpResponse;
     }
   }
 
@@ -138,12 +136,12 @@ export class Fetcher {
         requestPayload.start_index ?? 0
       );
 
-      return { content: [{ type: "text", text: markdown }], isError: false } satisfies FetchMcpResponse;
+      return { content: [{ type: "text", text: markdown }] } satisfies McpResponse;
     } catch (error) {
       return {
         content: [{ type: "text", text: (error as Error).message }],
         isError: true,
-      } satisfies FetchMcpResponse;
+      } satisfies McpResponse;
     }
   }
 }

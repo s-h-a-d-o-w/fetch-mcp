@@ -15,10 +15,10 @@ export type RequestPayload = {
   start_index?: number;
 };
 
-export type FetchMcpResponse = {
+export type McpResponse = {
   content: {
     type: "text";
     text: string;
   }[];
-  isError: boolean;
+  isError?: boolean;
 };
