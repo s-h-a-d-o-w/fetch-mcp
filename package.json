@@ -1,6 +1,6 @@
 {
   "name": "@s-h-a-d-o-w/fetch-mcp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A flexible HTTP fetching Model Context Protocol server.",
   "type": "module",
   "main": "dist/index.js",
