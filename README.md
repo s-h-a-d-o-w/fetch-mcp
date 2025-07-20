@@ -4,10 +4,6 @@
 
 This MCP server provides functionality to fetch web content in various formats, including HTML, JSON, plain text, and Markdown.
 
-<a href="https://glama.ai/mcp/servers/nu09wf23ao">
-  <img width="380" height="200" src="https://glama.ai/mcp/servers/nu09wf23ao/badge" alt="Fetch Server MCP server" />
-</a>
-
 ## Components
 
 ### Tools
