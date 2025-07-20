@@ -17,6 +17,8 @@ This MCP server provides functionality to fetch web content in various formats, 
   - Input:
     - `url` (string, required): URL of the website to fetch
     - `headers` (object, optional): Custom headers to include in the request
+    - `max_length` (number, optional): Maximum number of characters to return (default: 5000)
+    - `start_index` (number, optional): Start content from this character index (default: 0)
   - Returns the raw HTML content of the webpage
 
 - **fetch_json**
@@ -24,6 +26,8 @@ This MCP server provides functionality to fetch web content in various formats, 
   - Input:
     - `url` (string, required): URL of the JSON to fetch
     - `headers` (object, optional): Custom headers to include in the request
+    - `max_length` (number, optional): Maximum number of characters to return (default: 5000)
+    - `start_index` (number, optional): Start content from this character index (default: 0)
   - Returns the parsed JSON content
 
 - **fetch_txt**
@@ -31,6 +35,8 @@ This MCP server provides functionality to fetch web content in various formats, 
   - Input:
     - `url` (string, required): URL of the website to fetch
     - `headers` (object, optional): Custom headers to include in the request
+    - `max_length` (number, optional): Maximum number of characters to return (default: 5000)
+    - `start_index` (number, optional): Start content from this character index (default: 0)
   - Returns the text content of the webpage with HTML tags, scripts, and styles removed
 
 - **fetch_markdown**
@@ -38,6 +44,8 @@ This MCP server provides functionality to fetch web content in various formats, 
   - Input:
     - `url` (string, required): URL of the website to fetch
     - `headers` (object, optional): Custom headers to include in the request
+    - `max_length` (number, optional): Maximum number of characters to return (default: 5000)
+    - `start_index` (number, optional): Start content from this character index (default: 0)
   - Returns the content of the webpage converted to Markdown format
 
 ### Resources

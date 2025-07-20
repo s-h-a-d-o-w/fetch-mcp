@@ -1,0 +1,53 @@
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+    tags: ['*']
+
+env:
+  NODE_VERSIONS: '[20, 22]'
+  LATEST_NODE_VERSION: 22
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ${{ env.NODE_VERSIONS }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: |
+          pnpm install
+          pnpm test
+          pnpm build
+      - if: startsWith(github.ref, 'refs/tags/') && matrix.node-version == env.LATEST_NODE_VERSION
+        run: npm pack
+      - name: Upload package artifact
+        if: startsWith(github.ref, 'refs/tags/') && matrix.node-version == env.LATEST_NODE_VERSION
+        uses: actions/upload-artifact@v4
+        with:
+          name: package
+          path: "*.tgz"
+
+  release:
+    runs-on: ubuntu-latest
+    needs:
+      - test
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.LATEST_NODE_VERSION }}
+          registry-url: https://registry.npmjs.org
+      - uses: actions/download-artifact@v4
+        with: { name: package }
+      - run: npm publish *.tgz --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

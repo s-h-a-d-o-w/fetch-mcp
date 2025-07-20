@@ -8,11 +8,12 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { RequestPayloadSchema } from "./types.js";
 import { Fetcher } from "./Fetcher.js";
+import packageJson from "../package.json" with { type: "json" };
 
 const server = new Server(
   {
     name: "zcaceres/fetch",
-    version: "0.1.0",
+    version: packageJson.version,
   },
   {
     capabilities: {
