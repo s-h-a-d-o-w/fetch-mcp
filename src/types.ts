@@ -14,3 +14,11 @@ export type RequestPayload = {
   max_length?: number;
   start_index?: number;
 };
+
+export type FetchMcpResponse = {
+  content: {
+    type: "text";
+    text: string;
+  }[];
+  isError: boolean;
+};

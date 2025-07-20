@@ -1,14 +1,14 @@
 import { JSDOM } from "jsdom";
 import TurndownService from "turndown";
 import is_ip_private from "private-ip";
-import { RequestPayload } from "./types.js";
+import { FetchMcpResponse, RequestPayload } from "./types.js";
 
 export class Fetcher {
   private static applyLengthLimits(text: string, maxLength: number, startIndex: number): string {
     if (startIndex >= text.length) {
       return "";
     }
-    
+
     const end = Math.min(startIndex + maxLength, text.length);
     return text.substring(startIndex, end);
   }
@@ -47,20 +47,20 @@ export class Fetcher {
     try {
       const response = await this._fetch(requestPayload);
       let html = await response.text();
-      
+
       // Apply length limits
       html = this.applyLengthLimits(
-        html, 
-        requestPayload.max_length ?? 5000, 
+        html,
+        requestPayload.max_length ?? 5000,
         requestPayload.start_index ?? 0
       );
-      
-      return { content: [{ type: "text", text: html }], isError: false };
+
+      return { content: [{ type: "text", text: html }], isError: false } satisfies FetchMcpResponse;
     } catch (error) {
       return {
         content: [{ type: "text", text: (error as Error).message }],
         isError: true,
-      };
+      } satisfies FetchMcpResponse;
     }
   }
 
@@ -69,23 +69,23 @@ export class Fetcher {
       const response = await this._fetch(requestPayload);
       const json = await response.json();
       let jsonString = JSON.stringify(json);
-      
+
       // Apply length limits
       jsonString = this.applyLengthLimits(
         jsonString,
         requestPayload.max_length ?? 5000,
         requestPayload.start_index ?? 0
       );
-      
+
       return {
         content: [{ type: "text", text: jsonString }],
         isError: false,
-      };
+      } satisfies FetchMcpResponse;
     } catch (error) {
       return {
         content: [{ type: "text", text: (error as Error).message }],
         isError: true,
-      };
+      } satisfies FetchMcpResponse;
     }
   }
 
@@ -104,7 +104,7 @@ export class Fetcher {
 
       const text = document.body.textContent || "";
       let normalizedText = text.replace(/\s+/g, " ").trim();
-      
+
       // Apply length limits
       normalizedText = this.applyLengthLimits(
         normalizedText,
@@ -115,12 +115,12 @@ export class Fetcher {
       return {
         content: [{ type: "text", text: normalizedText }],
         isError: false,
-      };
+      } satisfies FetchMcpResponse;
     } catch (error) {
       return {
         content: [{ type: "text", text: (error as Error).message }],
         isError: true,
-      };
+      } satisfies FetchMcpResponse;
     }
   }
 
@@ -130,20 +130,20 @@ export class Fetcher {
       const html = await response.text();
       const turndownService = new TurndownService();
       let markdown = turndownService.turndown(html);
-      
+
       // Apply length limits
       markdown = this.applyLengthLimits(
         markdown,
         requestPayload.max_length ?? 5000,
         requestPayload.start_index ?? 0
       );
-      
-      return { content: [{ type: "text", text: markdown }], isError: false };
+
+      return { content: [{ type: "text", text: markdown }], isError: false } satisfies FetchMcpResponse;
     } catch (error) {
       return {
         content: [{ type: "text", text: (error as Error).message }],
         isError: true,
-      };
+      } satisfies FetchMcpResponse;
     }
   }
 }
