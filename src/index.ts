@@ -12,7 +12,7 @@ import packageJson from "../package.json" with { type: "json" };
 
 const server = new Server(
   {
-    name: "zcaceres/fetch",
+    name: packageJson.name,
     version: packageJson.version,
   },
   {
