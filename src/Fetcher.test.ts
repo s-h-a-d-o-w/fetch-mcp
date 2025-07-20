@@ -43,7 +43,6 @@ describe("Fetcher", () => {
       const result = await Fetcher.html(mockRequest);
       expect(result).toEqual({
         content: [{ type: "text", text: mockHtml }],
-        isError: false,
       });
     });
 
@@ -74,7 +73,6 @@ describe("Fetcher", () => {
       const result = await Fetcher.json(mockRequest);
       expect(result).toEqual({
         content: [{ type: "text", text: JSON.stringify(mockJson) }],
-        isError: false,
       });
     });
 
@@ -117,7 +115,6 @@ describe("Fetcher", () => {
       const result = await Fetcher.txt(mockRequest);
       expect(result).toEqual({
         content: [{ type: "text", text: mockTextContent }],
-        isError: false,
       });
     });
 
@@ -152,7 +149,6 @@ describe("Fetcher", () => {
       const result = await Fetcher.markdown(mockRequest);
       expect(result).toEqual({
         content: [{ type: "text", text: mockMarkdown }],
-        isError: false,
       });
     });
 
