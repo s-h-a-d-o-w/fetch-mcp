@@ -5,7 +5,6 @@ on:
     tags: ['*']
 
 env:
-  NODE_VERSIONS: '[20, 22]'
   LATEST_NODE_VERSION: 22
 
 jobs:
@@ -13,7 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ${{ env.NODE_VERSIONS }}
+        node-version:
+          - 20
+          - 22
     steps:
       - uses: actions/checkout@v4
       - name: Install pnpm
