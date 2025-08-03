@@ -1,17 +1,11 @@
 import { Fetcher } from "./Fetcher";
-import { JSDOM } from "jsdom";
-import TurndownService from "turndown";
 import { describe, it, expect, beforeEach, vi, Mock } from "vitest";
 
 global.fetch = vi.fn();
 
-vi.mock("jsdom");
-
-vi.mock("turndown");
-
 describe("Fetcher", () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.resetAllMocks();
   });
 
   const mockRequest = {
@@ -99,22 +93,9 @@ describe("Fetcher", () => {
         text: vi.fn().mockResolvedValueOnce(mockHtml),
       });
 
-      const mockTextContent = "Hello World This is a test paragraph.";
-      // @ts-expect-error Mocking JSDOM
-      (JSDOM as Mock).mockImplementationOnce(() => ({
-        window: {
-          document: {
-            body: {
-              textContent: mockTextContent,
-            },
-            getElementsByTagName: vi.fn().mockReturnValue([]),
-          },
-        },
-      }));
-
       const result = await Fetcher.txt(mockRequest);
       expect(result).toEqual({
-        content: [{ type: "text", text: mockTextContent }],
+        content: [{ type: "text", text: "Hello World This is a test paragraph." }],
       });
     });
 
@@ -141,14 +122,9 @@ describe("Fetcher", () => {
         text: vi.fn().mockResolvedValueOnce(mockHtml),
       });
 
-      const mockMarkdown = "# Hello World\n\nThis is a test paragraph.";
-      (TurndownService as Mock).mockImplementationOnce(() => ({
-        turndown: vi.fn().mockReturnValueOnce(mockMarkdown),
-      }));
-
       const result = await Fetcher.markdown(mockRequest);
       expect(result).toEqual({
-        content: [{ type: "text", text: mockMarkdown }],
+        content: [{ type: "text", text: "# Hello World\n\nThis is a test paragraph." }],
       });
     });
 

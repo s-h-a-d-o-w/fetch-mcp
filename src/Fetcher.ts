@@ -126,8 +126,19 @@ export class Fetcher {
     try {
       const response = await this._fetch(requestPayload);
       const html = await response.text();
-      const turndownService = new TurndownService();
-      let markdown = turndownService.turndown(html);
+
+      const dom = new JSDOM(html);
+      const document = dom.window.document;
+      // In case some headings are skipped, despite accessibility recommendations.
+      const article = document.getElementsByTagName("h1")[0]?.parentElement?.innerHTML || document.getElementsByTagName("h2")[0]?.parentElement?.innerHTML || document.getElementsByTagName("h3")[0]?.parentElement?.innerHTML || "No parseable document found.";
+
+      const turndownService = new TurndownService({
+        headingStyle: "atx",
+        hr: "---",
+        bulletListMarker: "-",
+        codeBlockStyle: "fenced"
+      });
+      let markdown = turndownService.turndown(article);
 
       // Apply length limits
       markdown = this.applyLengthLimits(

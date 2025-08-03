@@ -1,7 +1,7 @@
 on:
   pull_request:
   push:
-    branches: [main, master, publish-to-npm]
+    branches: [fork]
     tags: ['*']
 
 env:

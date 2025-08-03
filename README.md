@@ -1,3 +1,10 @@
+# Notable changes from the original
+
+Available on npmjs: `npm install @s-h-a-d-o-w/fetch-mcp`
+
+- Markdown conversion looks for a container that contains heading tags. It used to be that it included essentially the whole document.
+- Markdown conversion outputs more common markdown syntax.
+
 # Fetch MCP Server
 
 ![fetch mcp logo](logo.jpg)
