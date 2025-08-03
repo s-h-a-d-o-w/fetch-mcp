@@ -1,7 +1,7 @@
 import { JSDOM } from "jsdom";
 import TurndownService from "turndown";
 import is_ip_private from "private-ip";
-import { McpResponse, RequestPayload } from "./types.js";
+import type { McpResponse, RequestPayload } from "./types.js";
 
 export class Fetcher {
   private static applyLengthLimits(text: string, maxLength: number, startIndex: number): string {
